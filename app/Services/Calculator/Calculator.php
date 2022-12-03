@@ -86,6 +86,6 @@ class Calculator
             $answer += array_pop($stack);
         }
 
-        return round($answer, 2);
+        return round($answer, 10);
     }
 }
