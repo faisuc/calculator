@@ -60,14 +60,17 @@ function inputValue(value) {
 }
 
 function inputOperator(operator) {
-    const lastNum = expression.value.toString().match(/((?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?)/);
+    const lastNum = expression.value.toString().split(/((?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?)/).filter(n => n);
 
     if (operator == 'exp') {
         let exp = prompt("Please enter exponent value", 2);
 
         if (exp) {
-            if (lastNum !== null) {
-                expression.value = Math.pow(lastNum[0], exp);
+            if (lastNum !== null && Number.isFinite(parseFloat(lastNum[lastNum.length - 1]))) {
+                expression.value = expression.value.toString().replace(
+                        new RegExp(lastNum[lastNum.length - 1] + '$'),
+                        Math.pow(lastNum[lastNum.length - 1], exp)
+                    );
             } else {
                 expression.value = Math.pow(eval(expression.value), exp);
             }
