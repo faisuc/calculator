@@ -5,6 +5,8 @@ import Button from '@/Components/Calculator/Button.vue';
 
 const expression = ref('0');
 const tickerTapes = ref([]);
+const currentOperator = ref('');
+const currentPosNegNum = ref('');
 const equalsOperationTriggered = ref(false);
 
 const getTickerTapes = async () => {
@@ -40,6 +42,7 @@ const calculate = async () => {
             });
 
             equalsOperationTriggered.value = true;
+            currentPosNegNum.value = '';
         })
         .catch(error => {
             expression.value = 'Invalid input';
@@ -47,6 +50,11 @@ const calculate = async () => {
 }
 
 function inputValue(value) {
+    if (['+', '*', '-', '/'].includes(value)) {
+        currentOperator.value = value;
+        currentPosNegNum.value = '';
+    }
+
     if (equalsOperationTriggered.value) {
         expression.value = '';
         equalsOperationTriggered.value = false;
@@ -61,16 +69,16 @@ function inputValue(value) {
 
 function inputOperator(operator) {
     let lastNum = expression.value.toString().split(/((?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?)/).filter(n => n);
-    let curNum = lastNum[lastNum.length - 1];
+    let currentNum = lastNum[lastNum.length - 1];
 
     if (operator == 'exp') {
         let exp = prompt("Please enter exponent value", 2);
 
         if (exp) {
-            if (lastNum !== null && Number.isFinite(parseFloat(curNum))) {
+            if (lastNum !== null && Number.isFinite(parseFloat(currentNum))) {
                 expression.value = expression.value.toString().replace(
-                        new RegExp(curNum + '$'),
-                        Math.pow(curNum, exp)
+                        new RegExp(currentNum + '$'),
+                        Math.pow(currentNum, exp)
                     );
             } else {
                 expression.value = Math.pow(eval(expression.value), exp);
@@ -82,6 +90,15 @@ function inputOperator(operator) {
         } else {
             expression.value = Math.sqrt(eval(expression.value));
         }
+    } else if (operator == 'posNeg') {
+        if (currentPosNegNum.value == '') {
+            currentPosNegNum.value = currentNum;
+        }
+
+        expression.value = expression.value.toString().replace(
+                new RegExp(currentPosNegNum.value + '$'),
+                currentPosNegNum.value = currentPosNegNum.value * -1
+            );
     }
 }
 
@@ -135,7 +152,7 @@ onMounted(getTickerTapes);
                         <Button @click="inputValue(2)">2</Button>
                         <Button @click="inputValue(3)">3</Button>
                         <Button @click="inputValue('+')">+</Button>
-                        <Button>&nbsp;</Button>
+                        <Button @click="inputOperator('posNeg')"><sup>+</sup>/<sub>-</sub></Button>
                         <Button @click="inputValue(0)">0</Button>
                         <Button @click="inputValue('.')">.</Button>
                         <Button @click="calculate">=</Button>
