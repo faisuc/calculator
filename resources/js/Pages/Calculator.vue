@@ -60,7 +60,7 @@ function inputValue(value) {
 }
 
 function inputOperator(operator) {
-    const lastNum = expression.value.match(/[0-9]+$/);
+    const lastNum = expression.value.toString().match(/((?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?)/);
 
     if (operator == 'exp') {
         let exp = prompt("Please enter exponent value", 2);
