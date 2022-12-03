@@ -117,7 +117,7 @@ onMounted(getTickerTapes);
                         <Button @click="deleteEntry">DEL</Button>
                         <Button @click="inputValue('(')">(</Button>
                         <Button @click="inputValue(')')">)</Button>
-                        <Button @click="inputOperator('sqrt')">2√x</Button>
+                        <Button @click="inputOperator('sqrt')"><sup>2</sup>√x</Button>
                         <Button @click="inputValue('/')">/</Button>
                         <Button @click="inputValue(7)">7</Button>
                         <Button @click="inputValue(8)">8</Button>
@@ -141,7 +141,7 @@ onMounted(getTickerTapes);
                     <div class="flex space-between">
                         <h2 class="text-2xl font-bold tracking-tight text-gray-900 min-w-0 flex-1">History</h2>
                         <a v-if="(tickerTapes.length > 0)"
-                            @click="deleteAllTickerTapes"
+                            @click.prevent="deleteAllTickerTapes"
                             href="#"
                             class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50">Delete All</a>
                     </div>
