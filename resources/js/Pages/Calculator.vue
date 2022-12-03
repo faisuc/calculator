@@ -128,7 +128,7 @@ onMounted(getTickerTapes);
             <div class="relative mx-auto flex space-x-5">
                 <div class="w-1/2">
                     <div class="w-full mb-5 p-5 border-2 border-green-70 text-right font-bold">
-                        <p class="font-base text-5xl align-center">{{ expression }}</p>
+                        <p class="font-base text-3xl align-center">{{ expression }}</p>
                     </div>
 
                     <div class="grid grid-cols-4 gap-1 grid-cols">
