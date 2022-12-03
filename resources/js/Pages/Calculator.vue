@@ -131,7 +131,7 @@ onMounted(getTickerTapes);
                         <Button @click="inputValue(2)">2</Button>
                         <Button @click="inputValue(3)">3</Button>
                         <Button @click="inputValue('+')">+</Button>
-                        <Button>+/-</Button>
+                        <Button>&nbsp;</Button>
                         <Button @click="inputValue(0)">0</Button>
                         <Button @click="inputValue('.')">.</Button>
                         <Button @click="calculate">=</Button>
