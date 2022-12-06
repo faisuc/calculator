@@ -12,7 +12,7 @@ it('can calculate basic arithmetic operations', function ($expression) {
     '10-7=3',
     '10*10=100',
     '9/3=3',
-    '100+20/30*2=101.33',
+    '100+20/30*2=101.3333333333',
 ]);
 
 it('can calculate arithmetic operations that has parenthesis', function ($expression) {
