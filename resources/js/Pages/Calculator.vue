@@ -8,6 +8,7 @@ const tickerTapes = ref([]);
 const currentOperator = ref('');
 const currentPosNegNum = ref('');
 const equalsOperationTriggered = ref(false);
+const inputLine = ref([]);
 
 const getTickerTapes = async () => {
     let response = await axios.get('/api/ticker_tapes');
@@ -78,7 +79,7 @@ function inputOperator(operator) {
             if (lastNum !== null && Number.isFinite(parseFloat(currentNum))) {
                 expression.value = expression.value.toString().replace(
                         new RegExp(currentNum + '$'),
-                        Math.pow(currentNum, exp)
+                        currentNum + '^' + exp
                     );
             } else {
                 expression.value = Math.pow(eval(expression.value), exp);
@@ -86,9 +87,10 @@ function inputOperator(operator) {
         }
     } else if (operator == 'sqrt') {
         if (lastNum !== null) {
-            expression.value = Math.sqrt(lastNum[0]);
-        } else {
-            expression.value = Math.sqrt(eval(expression.value));
+            expression.value = expression.value.toString().replace(
+                new RegExp(lastNum + '$'),
+                'sqrt(' + lastNum + ')'
+            );
         }
     } else if (operator == 'posNeg') {
         if (currentPosNegNum.value == '') {

@@ -12,7 +12,7 @@ it('can calculate basic arithmetic operations', function ($expression) {
     '10-7=3',
     '10*10=100',
     '9/3=3',
-    '100+20/30*2=101.3333333333',
+    '100+20/30*2=101.33333333333',
 ]);
 
 it('can calculate arithmetic operations that has parenthesis', function ($expression) {
@@ -21,7 +21,7 @@ it('can calculate arithmetic operations that has parenthesis', function ($expres
     expect(Calculator::evaluate($operation))->toEqual($answer);
 })->with([
     '(1+2)*((14+2)/(2*2))=12',
-    '(((9*9)/12)+(13-4))*2)=31.5',
+    '(((9*9)/12)+(13-4))*2=31.5',
 ]);
 
 it('can calculate arithmetic operations that has negative numbers', function ($expression) {
@@ -30,8 +30,8 @@ it('can calculate arithmetic operations that has negative numbers', function ($e
     expect(Calculator::evaluate($operation))->toEqual($answer);
 })->with([
     '-1+5=4',
-    '10--2=8',
-    '-10--2=-12',
+    '10--2=12',
+    '-10--2=-8',
 ]);
 
 it('can calculate the fraction of the number', function ($expression) {
@@ -41,4 +41,21 @@ it('can calculate the fraction of the number', function ($expression) {
 })->with([
     '8=0.125',
     '899=0.0011123470522803',
+]);
+
+it('can calculate sqrt operations', function ($expression) {
+    [$operation, $answer] = explode('=', $expression);
+
+    expect(Calculator::evaluate($operation))->toEqual($answer);
+})->with([
+    'sqrt(2^3*3^2+2+2+3*4)=9.3808315196469',
+    'sqrt(9)=3'
+]);
+
+it('can calculate exponential operations', function ($expression) {
+    [$operation, $answer] = explode('=', $expression);
+
+    expect(Calculator::evaluate($operation))->toEqual($answer);
+})->with([
+    '(3^3)+(2^4)=43',
 ]);
