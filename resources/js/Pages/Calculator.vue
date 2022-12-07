@@ -90,13 +90,15 @@ function inputOperator(operator) {
             }
         }
     } else if (operator == 'sqrt') {
-        if (currentNum !== null && currentNum != 0) {
+        if (currentNum !== null && currentNum != 0 && Number.isFinite(currentNum)) {
             expression.value = expression.value.toString().replace(
                 new RegExp(currentNum + '$'),
                 'sqrt(' + currentNum + ')'
             );
         } else if (expression.value == 0) {
             expression.value = 'sqrt(';
+        } else {
+            expression.value = expression.value + 'sqrt(';
         }
     } else if (operator == 'posNeg') {
         if (currentPosNegNum.value == '') {
