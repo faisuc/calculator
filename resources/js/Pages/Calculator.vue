@@ -8,8 +8,6 @@ const tickerTapes = ref([]);
 const currentOperator = ref('');
 const currentPosNegNum = ref('');
 const equalsOperationTriggered = ref(false);
-const inputLine = ref([]);
-
 const getTickerTapes = async () => {
     let response = await axios.get('/api/ticker_tapes');
     tickerTapes.value = response.data.data;
@@ -71,6 +69,7 @@ function inputValue(value) {
 function inputOperator(operator) {
     let lastNum = expression.value.toString().split(/((?:[0-9]+,)*[0-9]+(?:\.[0-9]+)?)/).filter(n => n);
     let currentNum = lastNum[lastNum.length - 1];
+    let match = null;
 
     if (operator == 'exp') {
         let exp = prompt("Please enter exponent value", 2);
@@ -81,16 +80,23 @@ function inputOperator(operator) {
                         new RegExp(currentNum + '$'),
                         currentNum + '^' + exp
                     );
-            } else {
-                expression.value = Math.pow(eval(expression.value), exp);
+            } else if (match = expression.value.match(/\(([^()]*)\)$/)) {
+                expression.value = expression.value.toString().replace(
+                        match[0],
+                        match[0] + '^' + exp
+                    );
+            } else if (currentNum == ')') {
+                expression.value = expression.value.toString() + '^' + exp;
             }
         }
     } else if (operator == 'sqrt') {
-        if (lastNum !== null) {
+        if (currentNum !== null && currentNum != 0) {
             expression.value = expression.value.toString().replace(
-                new RegExp(lastNum + '$'),
-                'sqrt(' + lastNum + ')'
+                new RegExp(currentNum + '$'),
+                'sqrt(' + currentNum + ')'
             );
+        } else if (expression.value == 0) {
+            expression.value = 'sqrt(';
         }
     } else if (operator == 'posNeg') {
         if (currentPosNegNum.value == '') {

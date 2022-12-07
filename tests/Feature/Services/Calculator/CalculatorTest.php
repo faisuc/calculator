@@ -12,7 +12,7 @@ it('can calculate basic arithmetic operations', function ($expression) {
     '10-7=3',
     '10*10=100',
     '9/3=3',
-    '100+20/30*2=101.33333333333',
+    '100+20/30*2=101.3333333333',
 ]);
 
 it('can calculate arithmetic operations that has parenthesis', function ($expression) {
@@ -48,7 +48,7 @@ it('can calculate sqrt operations', function ($expression) {
 
     expect(Calculator::evaluate($operation))->toEqual($answer);
 })->with([
-    'sqrt(2^3*3^2+2+2+3*4)=9.3808315196469',
+    'sqrt(2^3*3^2+2+2+3*4)=9.3808315196',
     'sqrt(9)=3'
 ]);
 
@@ -58,4 +58,6 @@ it('can calculate exponential operations', function ($expression) {
     expect(Calculator::evaluate($operation))->toEqual($answer);
 })->with([
     '(3^3)+(2^4)=43',
+    '5.6124860801609^2=31.5',
+    '(2+2)^2=16',
 ]);
