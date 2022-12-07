@@ -48,6 +48,7 @@ it('can calculate sqrt operations', function ($expression) {
 
     expect(Calculator::evaluate($operation))->toEqual($answer);
 })->with([
+    'sqrt(((((9*9)/12)+(13-4))*2)^2)=31.5',
     'sqrt(2^3*3^2+2+2+3*4)=9.3808315196',
     'sqrt(9)=3'
 ]);
