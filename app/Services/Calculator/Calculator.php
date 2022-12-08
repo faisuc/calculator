@@ -21,7 +21,7 @@ class Calculator
         preg_match_all('/[^(sqrt)|(\d)|(\*)|(\/)|(^+.\-\/)]/', $expression, $invalidMatches);
 
         if (count($invalidMatches[0])) {
-            throw new Exception('Invalid inputss');
+            throw new Exception('Invalid input');
         }
 
         $expression = str_replace('^', '**', str_replace('--', '+', $expression));
