@@ -62,3 +62,12 @@ it('can calculate exponential operations', function ($expression) {
     '5.6124860801609^2=31.5',
     '(2+2)^2=16',
 ]);
+
+it('will throw an exception if the expression is invalid', function ($expression) {
+    [$operation, $answer] = explode('=', $expression);
+
+    expect(Calculator::evaluate($operation))->toEqual($answer);
+})->with([
+    'test(3*3)=9',
+    'exec(2+2)=4',
+])->throws(Exception::class);

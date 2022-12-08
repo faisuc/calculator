@@ -2,7 +2,7 @@
 
 namespace App\Services\Calculator;
 
-use Illuminate\Support\Arr;
+use Exception;
 
 class Calculator
 {
@@ -18,6 +18,12 @@ class Calculator
 
     private static function parse(string $expression): string
     {
+        preg_match_all('/[^(sqrt)|(\d)|(\*)|(\/)|(^+.\-\/)]/', $expression, $invalidMatches);
+
+        if (count($invalidMatches[0])) {
+            throw new Exception('Invalid inputss');
+        }
+
         $expression = str_replace('^', '**', str_replace('--', '+', $expression));
 
         return $expression;
